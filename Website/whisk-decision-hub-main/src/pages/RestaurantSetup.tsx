@@ -26,6 +26,9 @@ const NEIGHBORHOOD_COORDS: Record<string, { lat: number; lng: number }> = {
   "South End": { lat: 42.3388, lng: -71.0765 },
 };
 
+// Dev bypass flag (set VITE_DEV_AUTH=true to enable)
+const DEV_AUTH = import.meta.env.VITE_DEV_AUTH === "true";
+
 export default function RestaurantSetup() {
   const { user, loading: authLoading } = useAuth();
   const nav = useNavigate();
@@ -41,6 +44,22 @@ export default function RestaurantSetup() {
   useEffect(() => {
     if (authLoading) return;
     if (!user) { nav("/auth"); return; }
+
+    if (DEV_AUTH) {
+      // Load a saved local profile when running in dev-bypass mode
+      try {
+        const raw = localStorage.getItem("dev_restaurant_profile");
+        if (raw) {
+          const data = JSON.parse(raw);
+          setForm((f) => ({ ...f, ...data }));
+        }
+      } catch (e) {
+        // ignore
+      }
+      setLoading(false);
+      return;
+    }
+
     supabase.from("restaurants").select("*").eq("owner_user_id", user.id).single().then(({ data }) => {
       if (data) {
         setForm({
@@ -65,6 +84,16 @@ export default function RestaurantSetup() {
     if (!user) return;
     setBusy(true);
     try {
+      if (DEV_AUTH) {
+        // Save locally and short-circuit Supabase for dev demo environments
+        const coords = NEIGHBORHOOD_COORDS[form.neighborhood];
+        const payload = { ...form, lat: coords.lat, lng: coords.lng, setup_complete: true };
+        try { localStorage.setItem("dev_restaurant_profile", JSON.stringify(payload)); } catch (err) {}
+        toast({ title: "Saved (dev)", description: "Using local profile (dev bypass)" });
+        nav("/app");
+        return;
+      }
+
       const coords = NEIGHBORHOOD_COORDS[form.neighborhood];
       const { error } = await supabase.from("restaurants").update({
         ...form,
