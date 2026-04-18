@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Whisk Labs - Decision Intelligence design system.
+   All colors HSL. Tokens consumed via tailwind.config.ts. */
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Whisk brand: deep teal/indigo */
+    --primary: 222 47% 14%;
+    --primary-foreground: 210 40% 98%;
+    --primary-glow: 222 60% 28%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 14%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 42%;
+
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Status colors */
+    --success: 142 71% 38%;
+    --success-foreground: 0 0% 100%;
+    --success-soft: 142 65% 94%;
+
+    --warning: 35 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --warning-soft: 35 100% 94%;
+
+    --danger: 0 78% 52%;
+    --danger-foreground: 0 0% 100%;
+    --danger-soft: 0 85% 96%;
+
+    --live: 142 71% 45%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 28% 90%;
+    --input: 214 28% 90%;
+    --ring: 222 47% 14%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(222 47% 14%), hsl(222 60% 28%));
+    --gradient-success: linear-gradient(135deg, hsl(142 71% 38%), hsl(160 71% 42%));
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 40% 98%));
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(222 47% 14% / 0.05);
+    --shadow-md: 0 4px 12px -2px hsl(222 47% 14% / 0.08);
+    --shadow-lg: 0 16px 40px -12px hsl(222 47% 14% / 0.18);
+    --shadow-glow: 0 0 24px hsl(142 71% 45% / 0.4);
+
+    --transition-base: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  .live-pulse {
+    box-shadow: 0 0 0 0 hsl(var(--live) / 0.7);
+    animation: live-pulse 2s infinite;
+  }
+
+  @keyframes live-pulse {
+    0% { box-shadow: 0 0 0 0 hsl(var(--live) / 0.6); }
+    70% { box-shadow: 0 0 0 8px hsl(var(--live) / 0); }
+    100% { box-shadow: 0 0 0 0 hsl(var(--live) / 0); }
+  }
+
+  .fade-swap {
+    animation: fade-swap 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes fade-swap {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ── Landing page design system ─────────────────────────────────── */
+.landing-root {
+  --neon: oklch(0.78 0.11 140);
+  --landing-amber: oklch(0.74 0.12 55);
+  --grid: oklch(0.36 0.025 70 / 0.3);
+  background: oklch(0.22 0.018 60);
+  color: oklch(0.94 0.02 80);
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+.text-glow {
+  text-shadow:
+    0 0 20px color-mix(in oklab, var(--neon) 60%, transparent),
+    0 0 60px color-mix(in oklab, var(--neon) 30%, transparent);
+}
+
+.text-amber-glow {
+  text-shadow: 0 0 24px color-mix(in oklab, var(--landing-amber) 50%, transparent);
+}
+
+.drop-shadow-neon {
+  filter: drop-shadow(0 30px 40px color-mix(in oklab, var(--neon) 35%, transparent));
+}
+
+.noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}

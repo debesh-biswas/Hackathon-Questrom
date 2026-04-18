@@ -1,0 +1,91 @@
+{
+  "restaurant_id": "1680c65a",
+  "date": "2026-04-20",
+  "model": "lgbm_covers_v1",
+  "predicted_covers": 147,
+  "baseline_covers": 186,
+  "lift_pct": -21.0,
+  "items": [
+    {
+      "id": "alcoholic_drink",
+      "name": "Alcoholic Drink",
+      "category": "Beverages",
+      "baseline_qty": 74,
+      "predicted_qty": 41,
+      "ratio": 0.554,
+      "pct_change": -44.6
+    },
+    {
+      "id": "dessert",
+      "name": "Dessert",
+      "category": "Desserts",
+      "baseline_qty": 26,
+      "predicted_qty": 17,
+      "ratio": 0.654,
+      "pct_change": -34.6
+    },
+    {
+      "id": "fries__sides",
+      "name": "Fries / Sides",
+      "category": "Sides",
+      "baseline_qty": 93,
+      "predicted_qty": 65,
+      "ratio": 0.699,
+      "pct_change": -30.1
+    },
+    {
+      "id": "soup",
+      "name": "Soup",
+      "category": "Sides",
+      "baseline_qty": 33,
+      "predicted_qty": 24,
+      "ratio": 0.727,
+      "pct_change": -27.3
+    },
+    {
+      "id": "appetizer__starter",
+      "name": "Appetizer / Starter",
+      "category": "Starters",
+      "baseline_qty": 37,
+      "predicted_qty": 27,
+      "ratio": 0.73,
+      "pct_change": -27.0
+    },
+    {
+      "id": "burger__entree",
+      "name": "Burger / Entree",
+      "category": "Mains",
+      "baseline_qty": 102,
+      "predicted_qty": 77,
+      "ratio": 0.755,
+      "pct_change": -24.5
+    },
+    {
+      "id": "sandwich__wrap",
+      "name": "Sandwich / Wrap",
+      "category": "Mains",
+      "baseline_qty": 52,
+      "predicted_qty": 41,
+      "ratio": 0.788,
+      "pct_change": -21.2
+    },
+    {
+      "id": "salad",
+      "name": "Salad",
+      "category": "Healthy",
+      "baseline_qty": 41,
+      "predicted_qty": 36,
+      "ratio": 0.878,
+      "pct_change": -12.2
+    },
+    {
+      "id": "non-alc_beverage",
+      "name": "Non-Alc Beverage",
+      "category": "Beverages",
+      "baseline_qty": 158,
+      "predicted_qty": 144,
+      "ratio": 0.911,
+      "pct_change": -8.9
+    }
+  ]
+}
