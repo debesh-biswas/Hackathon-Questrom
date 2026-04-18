@@ -45,6 +45,7 @@ const Body = ({ view }: { view: View }) => {
 };
 
 const Index = () => {
+  const DEV_AUTH = import.meta.env.VITE_DEV_AUTH === "true";
   const [view, setView] = useState<View>("kitchen");
   const { user, loading: authLoading } = useAuth();
   const [checking, setChecking] = useState(true);
@@ -53,6 +54,14 @@ const Index = () => {
   useEffect(() => {
     if (authLoading) return;
     if (!user) { setChecking(false); return; }
+
+    if (DEV_AUTH) {
+      // In dev bypass mode skip the restaurants lookup and go straight to app
+      setNeedsSetup(false);
+      setChecking(false);
+      return;
+    }
+
     supabase
       .from("restaurants")
       .select("setup_complete")
