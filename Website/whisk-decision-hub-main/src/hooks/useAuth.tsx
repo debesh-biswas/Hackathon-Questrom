@@ -1,42 +1,22 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { Session, User } from "@supabase/supabase-js";
-import { supabase } from "@/integrations/supabase/client";
+// This file is an augmentation to the built-in ImportMeta interface
+// Thus cannot contain any top-level imports
+// <https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation>
 
-interface AuthCtx {
-  session: Session | null;
-  user: User | null;
-  loading: boolean;
-  signOut: () => Promise<void>;
+interface ImportMetaEnv {
+  [key: string]: any
+  BASE_URL: string
+  MODE: string
+  DEV: boolean
+  PROD: boolean
+  SSR: boolean
 }
 
-const Ctx = createContext<AuthCtx>({ session: null, user: null, loading: true, signOut: async () => {} });
+interface ImportMeta {
+  url: string
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  readonly hot?: import('./hot').ViteHotContext
 
-  useEffect(() => {
-    // Set up listener FIRST
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
-      setSession(s);
-      setLoading(false);
-    });
-    // THEN fetch existing
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
-    });
-    return () => sub.subscription.unsubscribe();
-  }, []);
+  readonly env: ImportMetaEnv
 
-  return (
-    <Ctx.Provider value={{
-      session, user: session?.user ?? null, loading,
-      signOut: async () => { await supabase.auth.signOut(); },
-    }}>
-      {children}
-    </Ctx.Provider>
-  );
+  glob: import('./importGlob').ImportGlobFunction
 }
-
-export const useAuth = () => useContext(Ctx);
